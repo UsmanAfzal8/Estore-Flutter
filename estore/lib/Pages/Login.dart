@@ -2,21 +2,22 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   // This widget is the root of your application.
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  late String _UserName, _Email, _Password;
+  late String _Email, _Password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Register Page "),
+        title: Text("Login Page "),
+        backgroundColor: Colors.blue,
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -27,7 +28,6 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 children: [
                   _showText(),
-                  _ShowUserName(),
                   _ShowEmail(),
                   _ShowPassword(),
                   _ShowActionbutton(), //signup and go back to login button
@@ -42,38 +42,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _showText() {
     return Text(
-      "Registration",
+      "Login",
       style: TextStyle(
         fontSize: 30.0,
         fontWeight: FontWeight.bold,
       ),
     );
-  }
-
-  Widget _ShowUserName() {
-    return Padding(
-        padding: EdgeInsets.only(top: 20.0),
-        child: TextFormField(
-          onSaved: (value) {
-            _UserName = value!;
-          },
-          validator: (value) {
-            if (value!.isEmpty) {
-              return "Enter Name";
-            } else if (value.length < 6)
-              return "Enter Name longer then 6 digit";
-            else
-              return null;
-          },
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: "UserName",
-            hintText: "Enter Name",
-            icon: Icon(
-              Icons.face,
-            ),
-          ),
-        ));
   }
 
   Widget _ShowEmail() {
@@ -140,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
             },
             child: Text("Signup"),
             style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).primaryColor,
+                primary: Colors.blue,
                 elevation: 0.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
@@ -148,9 +122,9 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/loginpage');
+                Navigator.pushNamed(context, '/RegisterPage');
               },
-              child: Text("Go Back To Login Page"))
+              child: Text("Go To Register Page"))
         ],
       ),
     );
@@ -159,7 +133,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void _submit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      print('UserName' + _UserName + 'Email' + _Email + 'Password' + _Password);
+      print('Email' + _Email + 'Password' + _Password);
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Validate ok')));
     } else {
